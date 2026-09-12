@@ -2,53 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="robots" content="noindex,nofollow">
-  <title>Security Patrol Checkpoint</title>
+  <meta name="theme-color" content="#ffffff">
+  <title>Security Patrol</title>
+
   <style>
-    body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0f172a;
-         color:#e2e8f0;font-family:Arial,sans-serif}
-    .card{width:min(420px,calc(100% - 40px));padding:32px;border-radius:18px;
-          background:#fff;color:#0f172a;text-align:center;box-shadow:0 20px 50px #0003}
-    h1{margin:0 0 10px;font-size:22px}
-    #status{color:#475569;font-weight:700;line-height:1.5}
-    .error{color:#b91c1c!important}
+    html,body{
+      margin:0;
+      width:100%;
+      min-height:100%;
+      background:#ffffff;
+    }
+    body{
+      visibility:hidden;
+    }
   </style>
-</head>
-<body>
-  <div class="card">
-    <h1>SECURITY PATROL</h1>
-    <div id="status">Opening checkpoint...</div>
-  </div>
 
   <script>
   (() => {
-    // v1.9.6.5 - Permanent Checkpoint Redirect Layer
-    // FUTURE APPS SCRIPT MIGRATIONS:
-    // Change ONLY this constant, commit, and GitHub Pages will route every
-    // already-printed checkpoint QR to the new deployment.
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzB-0jZIi8drqsNJTSl-U7SCLrpdvEqQdhk-vN-V7TFDXpRan64auSyafezQV5xxeSKtA/exec';
+    // v1.9.8.2 - Invisible Permanent Checkpoint Redirect
+    // Future Apps Script migration:
+    // change only WEB_APP_URL and commit.
+    const WEB_APP_URL =
+      'https://script.google.com/macros/s/AKfycbzB-0jZIi8drqsNJTSl-U7SCLrpdvEqQdhk-vN-V7TFDXpRan64auSyafezQV5xxeSKtA/exec';
+
     const TOTAL_CHECKPOINTS = 22;
 
-    const statusEl = document.getElementById('status');
-    const params = new URLSearchParams(window.location.search);
-    const rawPoint = params.get('point');
-    const point = Number(rawPoint);
+    const params =
+      new URLSearchParams(window.location.search);
 
-    if (!Number.isInteger(point) || point < 1 || point > TOTAL_CHECKPOINTS) {
-      statusEl.textContent = 'Invalid checkpoint QR code.';
-      statusEl.classList.add('error');
+    const point =
+      Number(params.get('point'));
+
+    if (
+      Number.isInteger(point) &&
+      point >= 1 &&
+      point <= TOTAL_CHECKPOINTS
+    ) {
+      const target =
+        WEB_APP_URL +
+        '?point=' +
+        encodeURIComponent(String(point));
+
+      window.location.replace(target);
       return;
     }
 
-    statusEl.textContent = `Opening checkpoint ${point}...`;
-
-    const target =
-      WEB_APP_URL + '?point=' + encodeURIComponent(String(point));
-
-    // replace() avoids leaving the redirect page in browser history.
-    window.location.replace(target);
+    // Only invalid manually entered URLs reveal an error.
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.style.visibility = 'visible';
+      document.body.textContent =
+        'Invalid security patrol checkpoint.';
+      document.body.style.padding = '24px';
+      document.body.style.fontFamily =
+        '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif';
+      document.body.style.color = '#b42318';
+      document.body.style.fontWeight = '700';
+    });
   })();
   </script>
-</body>
+</head>
+<body></body>
 </html>
