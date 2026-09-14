@@ -242,3 +242,116 @@ securitypatrolop.github.io/
 ├── README.md
 └── checkpoint/
     └── index.html
+```
+
+The checkpoint redirect must remain available at:
+
+`/checkpoint/index.html`
+
+---
+
+## Security
+
+This repository contains only public redirect infrastructure.
+
+Do not store sensitive information here.
+
+Do not commit:
+
+- passwords
+- signing secrets
+- Supervisor credentials
+- authentication tokens
+- private patrol records
+- private Google Sheet data
+- private backend configuration
+- API secrets
+
+The actual patrol records, authentication and verification logic remain on the backend.
+
+---
+
+## Reliability Principles
+
+This redirect should remain boring.
+
+That is a compliment.
+
+The important rules are:
+
+- permanent QR URLs should remain stable
+- valid checkpoint numbers should redirect correctly
+- invalid checkpoint numbers should not be accepted
+- backend URL changes should require only a small redirect update
+- browser history should not be unnecessarily polluted by the redirect
+- the redirect must remain publicly reachable
+- changes should be tested from a real mobile device
+
+This component should do one thing well:
+
+> Keep the physical QR codes working.
+
+---
+
+## Why Not Put the Backend URL Directly in the QR?
+
+Because the physical QR signs are permanent infrastructure.
+
+Backend deployments are not.
+
+Directly encoding a temporary or changeable application URL into physical signs would tightly couple the printed QR codes to the current hosting setup.
+
+Using this redirect layer separates the two.
+
+That gives the system flexibility to change backend deployments without touching the physical checkpoint signs.
+
+---
+
+## Related Components
+
+The complete Security Patrol System also includes:
+
+- Guard interface
+- QR scanner
+- Google Apps Script patrol backend
+- GPS verification
+- strict checkpoint sequence enforcement
+- patrol timing
+- Patrol Log
+- Supervisor Portal
+- signed patrol summaries
+- public authenticity verification
+
+This repository contains only the permanent checkpoint URL layer.
+
+---
+
+## Project Philosophy
+
+The system is intentionally focused on patrol verification rather than becoming a large workforce-management platform.
+
+The important questions are:
+
+- Was the required checkpoint reached?
+- Was it reached in the correct order?
+- Was the guard actually at the required location?
+- Was the checkpoint accepted by the backend?
+- Can the completed patrol record be independently verified later?
+
+This repository contributes one small but important part of that chain:
+
+keeping the physical checkpoint identity stable.
+
+---
+
+## Final Note
+
+This may be one of the simplest repositories in the whole project.
+
+And that is exactly how I want it.
+
+If everything is working correctly, nobody should notice this redirect exists.
+
+They scan the QR, the patrol system opens, and life goes on.
+
+The only time this repository becomes interesting is when someone accidentally makes it Private and all 22 checkpoints suddenly become very expensive-looking decorations.
