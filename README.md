@@ -2,9 +2,15 @@
 
 Permanent public checkpoint URL layer for the Security Patrol System.
 
-Production checkpoint format:
+Production checkpoint URL pattern:
 
-https://securitypatrolop.github.io/checkpoint/?point=N
+`https://securitypatrolop.github.io/checkpoint/?point=<checkpoint-number>`
+
+Example:
+
+https://securitypatrolop.github.io/checkpoint/?point=1
+
+Valid production checkpoint numbers are `1` through `22`.
 
 ---
 
