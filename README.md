@@ -4,7 +4,7 @@ Permanent public checkpoint URL layer for the Security Patrol System.
 
 Production checkpoint format:
 
-`https://securitypatrolop.github.io/checkpoint/?point=N`
+https://securitypatrolop.github.io/checkpoint/?point=N
 
 ---
 
