@@ -244,7 +244,6 @@ Yes, this was learned through practical testing.
 The important production structure is:
 
 ```text
-
 securitypatrolop.github.io/
 ├── README.md
 ├── index.html
