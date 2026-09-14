@@ -10,20 +10,33 @@
       'use strict';
 
       var APP_URL = 'https://script.google.com/macros/s/AKfycbzB-0jZIi8drqsNJTSl-U7SCLrpdvEqQdhk-vN-V7TFDXpRan64auSyafezQV5xxeSKtA/exec';
-      var destination = APP_URL + (window.location.search || '') + (window.location.hash || '');
+      var destination = new URL(APP_URL);
+      var incoming = new URLSearchParams(window.location.search || '');
 
-      window.location.replace(destination);
+      // The Apps Script web app serves Admin.html only when admin=1.
+      destination.searchParams.set('admin', '1');
+
+      // Preserve future Supervisor/Guest/reset parameters without allowing
+      // the required admin route flag to be overwritten.
+      incoming.forEach(function (value, key) {
+        if (String(key).toLowerCase() !== 'admin') {
+          destination.searchParams.append(key, value);
+        }
+      });
+
+      destination.hash = window.location.hash || '';
+      window.location.replace(destination.toString());
     })();
   </script>
   <noscript>
-    <meta http-equiv="refresh" content="0;url=https://script.google.com/macros/s/AKfycbzB-0jZIi8drqsNJTSl-U7SCLrpdvEqQdhk-vN-V7TFDXpRan64auSyafezQV5xxeSKtA/exec">
+    <meta http-equiv="refresh" content="0;url=https://script.google.com/macros/s/AKfycbzB-0jZIi8drqsNJTSl-U7SCLrpdvEqQdhk-vN-V7TFDXpRan64auSyafezQV5xxeSKtA/exec?admin=1">
   </noscript>
 </head>
 <body>
   <noscript>
     <p>
       JavaScript is disabled.
-      <a href="https://script.google.com/macros/s/AKfycbzB-0jZIi8drqsNJTSl-U7SCLrpdvEqQdhk-vN-V7TFDXpRan64auSyafezQV5xxeSKtA/exec">Open Security Patrol Supervisor</a>.
+      <a href="https://script.google.com/macros/s/AKfycbzB-0jZIi8drqsNJTSl-U7SCLrpdvEqQdhk-vN-V7TFDXpRan64auSyafezQV5xxeSKtA/exec?admin=1">Open Security Patrol Supervisor</a>.
     </p>
   </noscript>
 </body>
